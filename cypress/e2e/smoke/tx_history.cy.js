@@ -13,7 +13,7 @@ describe('Transaction history', () => {
 
   it('should display October 9th transactions', () => {
     const DATE = 'Oct 9, 2022'
-    const NEXT_DATE_LABEL = 'Feb 8, 2022'
+    const NEXT_DATE_LABEL = 'Feb 7, 2022'
 
     // Date label
     cy.contains('div', DATE).should('exist')
@@ -24,7 +24,7 @@ describe('Transaction history', () => {
     // Transaction summaries from October 9th
     const rows = cy.contains('div', DATE).nextUntil(`div:contains(${NEXT_DATE_LABEL})`)
 
-    rows.should('have.length', 19)
+    rows.should('have.length', 22)
 
     rows
       // Receive 0.25 GOR
@@ -129,6 +129,27 @@ describe('Transaction history', () => {
 
         // Status
         cy.contains('span', 'Success').should('exist')
+      })
+  })
+
+  it('should expand/collapse all actions', () => {
+    // Open the tx details
+    cy.contains('div', 'Mar 23, 2023')
+      .next()
+      .click()
+      .within(() => {
+        cy.contains('Expand all').click()
+
+        // All the values in the actions must be visible
+        cy.contains('True').should('exist')
+        cy.contains('1337').should('exist')
+        cy.contains('5688').should('exist')
+
+        // After collapse all the same values should not be visible
+        cy.contains('Collapse all').click()
+        cy.contains('True').should('not.be.visible')
+        cy.contains('1337').should('not.be.visible')
+        cy.contains('5688').should('not.be.visible')
       })
   })
 })
