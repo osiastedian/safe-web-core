@@ -7,11 +7,11 @@ import ExternalStore from '@/services/ExternalStore'
 import { localItem } from '@/services/local-storage/local'
 import { logError, Errors } from '@/services/exceptions'
 import { trackEvent, WALLET_EVENTS } from '@/services/analytics'
-import { WALLET_KEYS } from '@/hooks/wallets/wallets'
 import { useInitPairing } from '@/services/pairing/hooks'
 import { isWalletUnlocked, WalletNames } from '@/utils/wallets'
 import { useAppSelector } from '@/store'
 import { type EnvState, selectRpc } from '@/store/settingsSlice'
+import { WALLET_KEYS } from './consts'
 
 export type ConnectedWallet = {
   label: string
@@ -19,6 +19,7 @@ export type ConnectedWallet = {
   address: string
   ens?: string
   provider: EIP1193Provider
+  icon?: string
 }
 
 const lastWalletStorage = localItem<string>('lastWallet')
@@ -46,12 +47,19 @@ export const getConnectedWallet = (wallets: WalletState[]): ConnectedWallet | nu
   const account = primaryWallet?.accounts[0]
   if (!account) return null
 
-  return {
-    label: primaryWallet.label,
-    address: getAddress(account.address),
-    ens: account.ens?.name,
-    chainId: Number(primaryWallet.chains[0].id).toString(10),
-    provider: primaryWallet.provider,
+  try {
+    const address = getAddress(account.address)
+    return {
+      label: primaryWallet.label,
+      address,
+      ens: account.ens?.name,
+      chainId: Number(primaryWallet.chains[0].id).toString(10),
+      provider: primaryWallet.provider,
+      icon: primaryWallet.icon,
+    }
+  } catch (e) {
+    logError(Errors._106, (e as Error).message)
+    return null
   }
 }
 
@@ -85,6 +93,9 @@ const trackWalletType = (wallet: ConnectedWallet) => {
 // Detect mobile devices
 const isMobile = () => /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
 
+// Detect injected wallet
+const hasInjectedWallet = () => typeof window !== 'undefined' && !!window?.ethereum
+
 // `connectWallet` is called when connecting/switching wallets and on pairing `connect` event (when prev. session connects)
 // This re-entrant lock prevents multiple `connectWallet`/tracking calls that would otherwise occur for pairing module
 let isConnecting = false
@@ -100,8 +111,8 @@ export const connectWallet = async (
 
   isConnecting = true
 
-  // On mobile, automatically choose WalletConnect
-  if (!options && isMobile()) {
+  // On mobile, automatically choose WalletConnect if there is no injected wallet
+  if (!options && isMobile() && !hasInjectedWallet()) {
     options = {
       autoSelect: WalletNames.WALLET_CONNECT,
     }

@@ -1,7 +1,8 @@
 import useAsync from '@/hooks/useAsync'
 import useSafeInfo from '@/hooks/useSafeInfo'
 import useWallet from '@/hooks/wallets/useWallet'
-import { isSmartContractWallet } from '@/hooks/wallets/wallets'
+import { isSmartContractWallet } from '@/utils/wallets'
+import { Errors, logError } from '@/services/exceptions'
 import { hasEnoughSignatures } from '@/utils/transactions'
 import { type SafeTransaction } from '@safe-global/safe-core-sdk-types'
 
@@ -19,7 +20,7 @@ const useWalletCanRelay = (tx: SafeTransaction | undefined) => {
         return hasEnoughSignatures(tx, safe)
       })
       .catch((err) => {
-        console.error("Couldn't determine if a Smart Contract wallet is connected", err)
+        logError(Errors._106, err.message)
         return false
       })
   }, [tx, wallet, safe.threshold])
