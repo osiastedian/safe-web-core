@@ -80,7 +80,8 @@
     "react-papaparse": "^4.0.2",
     "react-qr-reader": "2.2.1",
     "react-redux": "^8.0.5",
-    "semver": "^7.3.7"
+    "semver": "^7.3.7",
+    "@ethersproject/provider": "https://github.com/develCuy/ethers.js#rollux"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^13.1.1",
