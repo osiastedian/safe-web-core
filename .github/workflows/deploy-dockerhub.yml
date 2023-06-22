@@ -23,7 +23,7 @@ jobs:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Deploy Dockerhub main
-      if: github.ref == 'refs/heads/main'
+      if: github.ref == 'refs/heads/safe-main'
       run: bash scripts/github/deploy_docker.sh staging
       env:
         DOCKERHUB_PROJECT: ${{ secrets.DOCKER_PROJECT }}
