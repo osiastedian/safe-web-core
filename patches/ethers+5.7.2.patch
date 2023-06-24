@@ -2,14 +2,33 @@ diff --git a/node_modules/@ethersproject/networks/lib.esm/index.js b/node_module
 index 918c9fb3..73654554 100644
 --- a/node_modules/@ethersproject/networks/lib.esm/index.js
 +++ b/node_modules/@ethersproject/networks/lib.esm/index.js
-@@ -168,6 +168,10 @@ const networks = {
+@@ -92,6 +92,18 @@
+     };
+     return func;
+ }
++function crossChainProvider(url, network) {
++    const func = function (providers, options) {
++        if (providers.JsonRpcProvider) {
++            return new providers.JsonRpcProvider(url);
++        }
++        return null;
++    };
++    func.renetwork = function (network) {
++        return crossChainProvider(url, network);
++    };
++    return func;
++}
+ const homestead = {
+     chainId: 1,
+     ensAddress: "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+@@ -173,6 +185,10 @@
      "arbitrum-goerli": { chainId: 421613, name: "arbitrum-goerli" },
      bnb: { chainId: 56, name: "bnb" },
      bnbt: { chainId: 97, name: "bnbt" },
 +    syscoin: { chainId: 57, name: "syscoin" },
 +    "syscoin-tanenbaum": { chainId: 5700, name: "syscoin-tanenbaum" },
 +    rollux: { chainId: 570, name: "rollux" },
-+    "rollux-tanenbaum": { chainId: 57000, name: "rollux-tanenbaum", ensAddress: "0xD5DD38942FE0a0913A35DeD04A702ba4951605A3", _defaultProvider: etcDefaultProvider("https://rpc.rollux.com", "rollux-tanenbaum") },
++    "rollux-tanenbaum": { chainId: 57000, name: "rollux-tanenbaum", ensAddress: "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e", _defaultProvider: crossChainProvider("https://1rpc.io/eth", "ethereum") },
  };
  /**
   *  getNetwork
@@ -17,14 +36,33 @@ diff --git a/node_modules/@ethersproject/networks/lib/index.js b/node_modules/@e
 index c0f624b0..dfafcb40 100644
 --- a/node_modules/@ethersproject/networks/lib/index.js
 +++ b/node_modules/@ethersproject/networks/lib/index.js
-@@ -170,6 +170,10 @@ var networks = {
+@@ -94,6 +94,18 @@
+     };
+     return func;
+ }
++function crossChainProvider(url, network) {
++    var func = function (providers, options) {
++        if (providers.JsonRpcProvider) {
++            return new providers.JsonRpcProvider(url);
++        }
++        return null;
++    };
++    func.renetwork = function (network) {
++        return crossChainProvider(url, network);
++    };
++    return func;
++}
+ var homestead = {
+     chainId: 1,
+     ensAddress: "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+@@ -175,6 +187,10 @@
      "arbitrum-goerli": { chainId: 421613, name: "arbitrum-goerli" },
      bnb: { chainId: 56, name: "bnb" },
      bnbt: { chainId: 97, name: "bnbt" },
 +    syscoin: { chainId: 57, name: "syscoin" },
 +    "syscoin-tanenbaum": { chainId: 5700, name: "syscoin-tanenbaum" },
 +    rollux: { chainId: 570, name: "rollux" },
-+    "rollux-tanenbaum": { chainId: 57000, name: "rollux-tanenbaum", ensAddress: "0xD5DD38942FE0a0913A35DeD04A702ba4951605A3", _defaultProvider: etcDefaultProvider("https://rpc.rollux.com", "rollux-tanenbaum") },
++    "rollux-tanenbaum": { chainId: 57000, name: "rollux-tanenbaum", ensAddress: "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e", _defaultProvider: crossChainProvider("https://1rpc.io/eth", "ethereum") },
  };
  /**
   *  getNetwork
@@ -32,8 +70,31 @@ diff --git a/node_modules/@ethersproject/networks/src.ts/index.ts b/node_modules
 index daf97b7d..ed8dde80 100644
 --- a/node_modules/@ethersproject/networks/src.ts/index.ts
 +++ b/node_modules/@ethersproject/networks/src.ts/index.ts
-@@ -208,6 +208,12 @@ const networks: { [name: string]: Network } = {
+@@ -112,6 +112,22 @@
+     return func;
+ }
 
++function crossChainProvider(url: string, network: string | Network): Renetworkable {
++    const func = function(providers: any, options?: any): any {
++        if (providers.JsonRpcProvider) {
++            return new providers.JsonRpcProvider(url);
++        }
++
++        return null;
++    };
++
++    func.renetwork = function(network: Network) {
++        return crossChainProvider(url);
++    };
++
++    return func;
++}
++
+ const homestead: Network = {
+     chainId: 1,
+     ensAddress: "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+@@ -214,6 +230,12 @@
+ 
      bnb: { chainId: 56, name: "bnb" },
      bnbt: { chainId: 97, name: "bnbt" },
 +
@@ -41,7 +102,7 @@ index daf97b7d..ed8dde80 100644
 +    "syscoin-tanenbaum": { chainId: 5700, name: "syscoin-tanenbaum" },
 +
 +    rollux: { chainId: 570, name: "rollux" },
-+    "rollux-tanenbaum": { chainId: 57000, name: "rollux-tanenbaum", ensAddress: "0xD5DD38942FE0a0913A35DeD04A702ba4951605A3", _defaultProvider: etcDefaultProvider("https://rpc.rollux.com", "rollux-tanenbaum") },
++    "rollux-tanenbaum": { chainId: 57000, name: "rollux-tanenbaum", ensAddress: "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e", _defaultProvider: crossChainProvider("https://1rpc.io/eth", "ethereum") },
  }
 
  /**
