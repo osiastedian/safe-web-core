@@ -30,10 +30,14 @@ export const forgetLastWallet = () => {
 
 const { getStore, setStore, useStore } = new ExternalStore<OnboardAPI>()
 
-export const initOnboard = async (chainConfigs: ChainInfo[], rpcConfig: EnvState['rpc'] | undefined) => {
+export const initOnboard = async (
+  chainConfigs: ChainInfo[],
+  currentChain: ChainInfo,
+  rpcConfig: EnvState['rpc'] | undefined,
+) => {
   const { createOnboard } = await import('@/services/onboard')
   if (!getStore()) {
-    setStore(createOnboard(chainConfigs, rpcConfig))
+    setStore(createOnboard(chainConfigs, currentChain, rpcConfig))
   }
 }
 
@@ -44,7 +48,7 @@ export const getConnectedWallet = (wallets: WalletState[]): ConnectedWallet | nu
   const primaryWallet = wallets[0]
   if (!primaryWallet) return null
 
-  const account = primaryWallet?.accounts[0]
+  const account = primaryWallet.accounts[0]
   if (!account) return null
 
   try {
@@ -145,31 +149,8 @@ export const connectWallet = async (
   return wallets
 }
 
-// A workaround for an onboard "feature" that shows a defunct account select popup
-// See https://github.com/blocknative/web3-onboard/issues/888
-const closeAccountSelectionModal = () => {
-  const maxTries = 100
-  const modalText = 'Please switch the active account'
-  let tries = 0
-
-  const timer = setInterval(() => {
-    const onboardModal = document.querySelector('onboard-v2')?.shadowRoot
-    const isActionRequired = onboardModal?.textContent?.includes(modalText)
-
-    if (isActionRequired) {
-      // Dismiss the modal
-      ;(onboardModal?.querySelector('.background') as HTMLElement)?.click()
-      tries = maxTries
-    }
-
-    tries += 1
-    if (tries >= maxTries) clearInterval(timer)
-  }, 100)
-}
-
 export const switchWallet = (onboard: OnboardAPI) => {
   connectWallet(onboard)
-  closeAccountSelectionModal()
 }
 
 // Disable/enable wallets according to chain and cache the last used wallet
@@ -182,10 +163,10 @@ export const useInitOnboard = () => {
   useInitPairing()
 
   useEffect(() => {
-    if (configs.length > 0) {
-      void initOnboard(configs, customRpc)
+    if (configs.length > 0 && chain) {
+      void initOnboard(configs, chain, customRpc)
     }
-  }, [configs, customRpc])
+  }, [configs, chain, customRpc])
 
   // Disable unsupported wallets on the current chain
   useEffect(() => {
@@ -197,12 +178,10 @@ export const useInitOnboard = () => {
       onboard.state.actions.setWalletModules(supportedWallets)
     }
 
-    enableWallets()
-  }, [chain, onboard])
+    // Connect to the last connected wallet
+    enableWallets().then(() => {
+      if (onboard.state.get().wallets.length > 0) return
 
-  // Connect to the last connected wallet
-  useEffect(() => {
-    if (onboard && onboard.state.get().wallets.length === 0) {
       const label = lastWalletStorage.get()
       if (!label) return
 
@@ -212,8 +191,8 @@ export const useInitOnboard = () => {
             autoSelect: { label, disableModals: true },
           })
       })
-    }
-  }, [onboard])
+    })
+  }, [chain, onboard])
 }
 
 export default useStore
