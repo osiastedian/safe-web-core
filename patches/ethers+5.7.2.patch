@@ -9,7 +9,7 @@ index 918c9fb3..73654554 100644
 +    syscoin: { chainId: 57, name: "syscoin" },
 +    "syscoin-tanenbaum": { chainId: 5700, name: "syscoin-tanenbaum" },
 +    rollux: { chainId: 570, name: "rollux" },
-+    "rollux-tanenbaum": { chainId: 57000, name: "rollux-tanenbaum" },
++    "rollux-tanenbaum": { chainId: 57000, name: "rollux-tanenbaum", ensAddress: "0xD5DD38942FE0a0913A35DeD04A702ba4951605A3" },
  };
  /**
   *  getNetwork
@@ -24,7 +24,7 @@ index c0f624b0..dfafcb40 100644
 +    syscoin: { chainId: 57, name: "syscoin" },
 +    "syscoin-tanenbaum": { chainId: 5700, name: "syscoin-tanenbaum" },
 +    rollux: { chainId: 570, name: "rollux" },
-+    "rollux-tanenbaum": { chainId: 57000, name: "rollux-tanenbaum" },
++    "rollux-tanenbaum": { chainId: 57000, name: "rollux-tanenbaum", ensAddress: "0xD5DD38942FE0a0913A35DeD04A702ba4951605A3" },
  };
  /**
   *  getNetwork
@@ -41,7 +41,7 @@ index daf97b7d..ed8dde80 100644
 +    "syscoin-tanenbaum": { chainId: 5700, name: "syscoin-tanenbaum" },
 +
 +    rollux: { chainId: 570, name: "rollux" },
-+    "rollux-tanenbaum": { chainId: 57000, name: "rollux-tanenbaum" },
++    "rollux-tanenbaum": { chainId: 57000, name: "rollux-tanenbaum", ensAddress: "0xD5DD38942FE0a0913A35DeD04A702ba4951605A3" },
  }
 
  /**
