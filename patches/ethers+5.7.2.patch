@@ -25,10 +25,10 @@ index 918c9fb3..73654554 100644
      "arbitrum-goerli": { chainId: 421613, name: "arbitrum-goerli" },
      bnb: { chainId: 56, name: "bnb" },
      bnbt: { chainId: 97, name: "bnbt" },
-+    syscoin: { chainId: 57, name: "syscoin" },
-+    "syscoin-tanenbaum": { chainId: 5700, name: "syscoin-tanenbaum" },
-+    rollux: { chainId: 570, name: "rollux" },
-+    "rollux-tanenbaum": { chainId: 57000, name: "rollux-tanenbaum", ensAddress: "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e", _defaultProvider: crossChainProvider("https://1rpc.io/eth", "ethereum") },
++    syscoin: { chainId: 57, name: "syscoin", ensAddress: "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e", _defaultProvider: crossChainProvider("https://eth.llamarpc.com", "any") },
++    "syscoin-tanenbaum": { chainId: 5700, name: "syscoin-tanenbaum", ensAddress: "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e", _defaultProvider: crossChainProvider("https://eth.llamarpc.com", "any") },
++    rollux: { chainId: 570, name: "rollux", ensAddress: "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e", _defaultProvider: crossChainProvider("https://eth.llamarpc.com", "any") },
++    "rollux-tanenbaum": { chainId: 57000, name: "rollux-tanenbaum", ensAddress: "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e", _defaultProvider: crossChainProvider("https://eth.llamarpc.com", "any") },
  };
  /**
   *  getNetwork
@@ -59,10 +59,10 @@ index c0f624b0..dfafcb40 100644
      "arbitrum-goerli": { chainId: 421613, name: "arbitrum-goerli" },
      bnb: { chainId: 56, name: "bnb" },
      bnbt: { chainId: 97, name: "bnbt" },
-+    syscoin: { chainId: 57, name: "syscoin" },
-+    "syscoin-tanenbaum": { chainId: 5700, name: "syscoin-tanenbaum" },
-+    rollux: { chainId: 570, name: "rollux" },
-+    "rollux-tanenbaum": { chainId: 57000, name: "rollux-tanenbaum", ensAddress: "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e", _defaultProvider: crossChainProvider("https://1rpc.io/eth", "ethereum") },
++    syscoin: { chainId: 57, name: "syscoin", ensAddress: "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e", _defaultProvider: crossChainProvider("https://eth.llamarpc.com", "any") },
++    "syscoin-tanenbaum": { chainId: 5700, name: "syscoin-tanenbaum", ensAddress: "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e", _defaultProvider: crossChainProvider("https://eth.llamarpc.com", "any") },
++    rollux: { chainId: 570, name: "rollux", ensAddress: "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e", _defaultProvider: crossChainProvider("https://eth.llamarpc.com", "any") },
++    "rollux-tanenbaum": { chainId: 57000, name: "rollux-tanenbaum", ensAddress: "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e", _defaultProvider: crossChainProvider("https://eth.llamarpc.com", "any") },
  };
  /**
   *  getNetwork
@@ -98,11 +98,11 @@ index daf97b7d..ed8dde80 100644
      bnb: { chainId: 56, name: "bnb" },
      bnbt: { chainId: 97, name: "bnbt" },
 +
-+    syscoin: { chainId: 57, name: "syscoin" },
-+    "syscoin-tanenbaum": { chainId: 5700, name: "syscoin-tanenbaum" },
++    syscoin: { chainId: 57, name: "syscoin", ensAddress: "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e", _defaultProvider: crossChainProvider("https://eth.llamarpc.com", "any") },
++    "syscoin-tanenbaum": { chainId: 5700, name: "syscoin-tanenbaum", ensAddress: "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e", _defaultProvider: crossChainProvider("https://eth.llamarpc.com", "any") },
 +
-+    rollux: { chainId: 570, name: "rollux" },
-+    "rollux-tanenbaum": { chainId: 57000, name: "rollux-tanenbaum", ensAddress: "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e", _defaultProvider: crossChainProvider("https://1rpc.io/eth", "ethereum") },
++    rollux: { chainId: 570, name: "rollux", ensAddress: "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e", _defaultProvider: crossChainProvider("https://eth.llamarpc.com", "any") },
++    "rollux-tanenbaum": { chainId: 57000, name: "rollux-tanenbaum", ensAddress: "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e", _defaultProvider: crossChainProvider("https://eth.llamarpc.com", "any") },
  }
 
  /**
