@@ -27,4 +27,4 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: ghcr.io/SYS-Labs/safe-web-core:latest
+          tags: ghcr.io/sys-labs/safe-web-core:latest
