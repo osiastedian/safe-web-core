@@ -1,4 +1,4 @@
-import { type JsonRpcProvider } from '@ethersproject/providers'
+import { JsonRpcProvider } from '@ethersproject/providers'
 import { logError } from './exceptions'
 import ErrorCodes from './exceptions/ErrorCodes'
 
@@ -16,7 +16,7 @@ export function isDomain(domain: string): boolean {
 export const resolveName = async (rpcProvider: JsonRpcProvider, name: string): Promise<string | undefined> => {
   try {
     const network = await rpcProvider.getNetwork();
-    const resolver: Resolver = "function" === typeof network._defaultProvider ?
+    const resolver = "function" === typeof network._defaultProvider ?
       network._defaultProvider(network) || {} : {}
 
     if ("object" === typeof resolver && resolver.network) {
