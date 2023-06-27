@@ -3,7 +3,7 @@ name: Github Image Build and Push
 on:
   push:
     branches:
-      - 'safe-main'
+      - 'osiastedian-safe-main'
 
 jobs:
   docker:
@@ -27,4 +27,4 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: ghcr.io/sys-labs/safe-web-core:latest
+          tags: ghcr.io/osiastedian/safe-web-core:latest
